@@ -1,4 +1,4 @@
-# node-lts-devcontainer
+# node-lts-iron
 
 Build a debian-based docker image to use as a development environment.
 
