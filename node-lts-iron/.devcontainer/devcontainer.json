@@ -1,0 +1,158 @@
+// spell-checker: disable
+{
+    "name": "Node 20.18.3",
+    "dockerComposeFile": ["docker-compose.yml"],
+    "service": "app",
+    "customizations": {
+        "vscode": {
+            // Add the IDs of extensions you want installed when the container is created.
+            "extensions": [
+                "christian-kohler.npm-intellisense",
+                "christian-kohler.path-intellisense",
+                "davidanson.vscode-markdownlint",
+                "dbaeumer.vscode-eslint",
+                "dkundel.vscode-new-file",
+                "eamodio.gitlens",
+                "editorconfig.editorconfig",
+                "formulahendry.code-runner",
+                "gruntfuggly.todo-tree",
+                "mads-hartmann.bash-ide-vscode",
+                "ms-vscode.js-debug",
+                // js-debug-companion is for the local VSCode only and will throw an error on the server!
+                // "ms-vscode.js-debug-companion",
+                "rangav.vscode-thunder-client",
+                "ritwickdey.liveserver",
+                "rvest.vs-code-prettier-eslint",
+                "shardulm94.trailing-spaces",
+                "tomoki1207.selectline-statusbar",
+                // Miscellaneous.
+                "aaron-bond.better-comments",
+                "dsznajder.es7-react-js-snippets",
+                "stackbreak.comment-divider",
+                "streetsidesoftware.code-spell-checker"
+            ],
+            // Set *default* container specific settings.json values on container create.
+            "settings": {
+                "search.exclude": {
+                    "**/node_modules": false,
+                    "/node_modules": true
+                },
+                "files.associations": {
+                    ".envrc": "shellscript",
+                    "Dockerfile.*": "dockerfile",
+                    "*.yml.tpl": "yaml"
+                },
+                "files.watcherExclude": {
+                    "**/node_modules/**": false,
+                    "/node_modules/**": true
+                },
+                // @FIXME: Disable debugger autoAttach and usePreviewfor now.
+                // see: https://github.com/microsoft/vscode/issues/102249
+                "debug.node.autoAttach": "disabled",
+                "debug.javascript.usePreview": false,
+                "debug.toolBarLocation": "docked",
+                "editor.codeActionsOnSave": {
+                    "source.fixAll.eslint": true
+                },
+                "editor.codeActionsOnSaveTimeout": 500,
+                "editor.detectIndentation": true,
+                "editor.dragAndDrop": true,
+                "editor.formatOnSave": true,
+                "editor.insertSpaces": true,
+                "editor.rulers": [80, 120],
+                "editor.snippetSuggestions": "top",
+                "editor.tabSize": 4,
+                "editor.wordWrap": "off",
+                "eslint.alwaysShowStatus": true,
+                "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "html"],
+                "explorer.compactFolders": false,
+                "extensions.autoUpdate": false,
+                "liveServer.settings": {
+                    "port": 5500,
+                    "root": "/doc"
+                },
+                "markdownlint.config": {
+                    "MD013": false,
+                    "MD033": false
+                },
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "/bin/bash",
+                        "args": ["-i"],
+                        "icon": "terminal-bash"
+                    }
+                },
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "todo-tree.general.tags": [
+                    "BUG",
+                    "@BUG",
+                    "HACK",
+                    "@HACK",
+                    "FIXME",
+                    "@FIXME",
+                    "TODO",
+                    "@TODO",
+                    "[ ]",
+                    "[x]"
+                ],
+                "todo-tree.highlights.defaultHighlight": {
+                    "type": "tag",
+                    "foreground": "#0006F8",
+                    "gutterIcon": true
+                },
+                // Formatters.
+                "javascript.format.enable": false,
+                "typescript.format.enable": false,
+                "[css][scss][less]": {
+                    "editor.defaultFormatter": "vscode.css-language-features"
+                },
+                "[javascript]": {
+                    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+                },
+                "[javascriptreact]": {
+                    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+                },
+                "[json][jsonc]": {
+                    "editor.defaultFormatter": "vscode.json-language-features"
+                },
+                "[typescript]": {
+                    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+                },
+                "[typescriptreact]": {
+                    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+                },
+                "alignment.surroundSpace": {
+                    "colon": [1, 1],
+                    "assignment": [1, 1],
+                    "arrow": [1, 1],
+                    "comment": 2
+                },
+                "prettier.useEditorConfig": true,
+                // Language settings.
+                "[markdown]": {
+                    "editor.wordWrap": "off",
+                    "editor.quickSuggestions": {
+                        "other": true,
+                        "comments": false,
+                        "strings": false
+                    }
+                }
+            }
+        }
+    },
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "forwardPorts": [3000, 8080, 9003, 9229],
+    // Mount ssh directory inside container for use with git. Mount node_modules from an internal volume.
+    "mounts": [
+        "source=${localEnv:HOME}/.ssh,target=/home/app/.ssh,type=bind,consistency=cached"
+    ],
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "yarn install",
+    // Re-enable running of entrypoint which is overridden when referencing a Docker file in here. Take note that you
+    // must then also add back support to prevent the container from exiting after startup possibly by implementing the
+    // following command in your Dockerfile: `CMD [ "sleep", "infinity" ]`
+    "overrideCommand": false,
+    // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+    "remoteUser": "app",
+    "workspaceFolder": "/home/app/source"
+}

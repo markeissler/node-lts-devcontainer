@@ -1,0 +1,34 @@
+# repo
+.git
+.gitignore
+
+# ide support (in general)
+.devcontainer
+.editorconfig
+# .env*
+.idea
+.vscode
+
+# container build
+Dockerfile
+dockerfiles/
+
+# binaries
+.bin
+
+# javascript, typescript, node.js
+node_modules
+yarn-error.log
+
+# miscellaneous
+.DS_Store
+doc/
+docs/
+log/
+*.log
+tmp/
+*.md
+.standard.yml
+# Makefile
+README.md
+resources/

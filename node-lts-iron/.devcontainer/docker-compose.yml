@@ -1,0 +1,112 @@
+# docker-compose.yml for local development only.
+#
+# This file conforms to the Compose specification as detailed here:
+#   https://docs.docker.com/compose/compose-file/
+#
+# Take note that the `version` field has been deprecated at this point which is
+# why you don't see it here.
+#
+# Requirements:
+#   - Pay attention to the `RUN_ARCH` value. You must customize this for YOUR
+#     dev environment. It will default to `linux_amd64` (x86), for macOS M1 you
+#     MUST set this to `linux_arm64`.
+#
+services:
+  app:
+    build:
+      args:
+        RUN_ARCH: "${RUN_ARCH:-linux_amd64}"
+      context: .
+      dockerfile: "Dockerfile"
+      target: "dev-builder"
+    environment:
+        AZ_OVERRIDE_MANAGED_IDENTITY: 1
+        XDEBUG_MODE: debug
+        XDEBUG_CONFIG: client_host=app.local client_port=9003
+    networks:
+      app_net:
+        ipv4_address: "172.16.222.10"
+        ipv6_address: "fd90:5b8f:a0aa:d9eb::10"
+        aliases:
+          - app.local
+    volumes:
+      - ../.:/home/app/source:cached
+      - persist-node-modules:/home/app/source/node_modules
+
+  mariadb:
+    image: markeissler/mariadb10-ssl:latest
+    container_name: ${COMPOSE_PROJECT_NAME:-app}-mariadb
+    environment:
+      MARIADB_DATABASE: ${COMPOSE_PROJECT_NAME:-app}
+      MARIADB_USER: app_db_user
+      MARIADB_PASSWORD: app_db_pass
+      MARIADB_ROOT_PASSWORD: app_db_root
+      MARIADB_AUTHENTICATION_PLUGIN: mysql_native_password
+    networks:
+      app_net:
+        ipv4_address: "172.16.229.10"
+        ipv6_address: "fd34:e78d:7bcb:47e8::10"
+        aliases:
+          - mariadb.local
+    ports:
+      - "3308:3306"
+    volumes:
+      - "persist-mariadb:/var/lib/mysql"
+    scale: 0
+
+  postgres:
+    image: markeissler/postgres11-ssl:latest
+    container_name: ${COMPOSE_PROJECT_NAME:-app}-postgres
+    environment:
+      - POSTGRES_USER=app_pg_user
+      - POSTGRES_PASSWORD=app_pg_pass
+      - ENABLE_QUERY_LOG=1
+    networks:
+      app_net:
+        ipv4_address: "172.16.229.14"
+        ipv6_address: "fd34:e78d:7bcb:47e8::14"
+        aliases:
+          - postgres.local
+    ports:
+      - "5432:5432"
+    volumes:
+      - "persist-postgres:/var/lib/postgresql/data"
+    scale: 0
+
+  redis:
+    image: redis:6.2-alpine
+    container_name: ${COMPOSE_PROJECT_NAME:-app}-redis
+    command: redis-server
+    networks:
+      app_net:
+        ipv4_address: "172.16.229.18"
+        ipv6_address: "fd34:e78d:7bcb:47e8::18"
+        aliases:
+          - redis.local
+    ports:
+      - "6379:6379"
+    volumes:
+      - "persist-redis:/data"
+    scale: 0
+
+networks:
+  app_net:
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+      -
+        subnet: "172.16.222.0/24"
+      -
+        subnet: "fd90:5b8f:a0aa:d9eb::/64"
+
+volumes:
+  persist-mariadb:
+    name: "${COMPOSE_PROJECT_NAME:-app}-devcontainer-persist-mysql"
+  persist-postgres:
+    name: "${COMPOSE_PROJECT_NAME:-app}-devcontainer-persist-postgres"
+  persist-redis:
+   name: "${COMPOSE_PROJECT_NAME:-app}-devcontainer-persist-redis"
+  persist-node-modules:
+    name: "${COMPOSE_PROJECT_NAME:-app}-devcontainer-persist-node-modules"
