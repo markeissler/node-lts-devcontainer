@@ -4,9 +4,15 @@
 root = true
 
 [*]
-indent_style = space
-indent_size = 4
-end_of_line = lf
 charset = utf-8
-trim_trailing_whitespace = false
+end_of_line = lf
+indent_size = 4
+indent_style = space
 insert_final_newline = true
+trim_trailing_whitespace = false
+
+[*.{js}]
+indent_size = 2
+
+[*.{yml,yaml}]
+indent_size = 2

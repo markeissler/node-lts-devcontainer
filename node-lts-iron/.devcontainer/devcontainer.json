@@ -1,7 +1,9 @@
 // spell-checker: disable
 {
     "name": "Node 20.18.3",
-    "dockerComposeFile": ["docker-compose.yml"],
+    "dockerComposeFile": [
+        "docker-compose.yml"
+    ],
     "service": "app",
     "customizations": {
         "vscode": {
@@ -12,7 +14,6 @@
                 "davidanson.vscode-markdownlint",
                 "dbaeumer.vscode-eslint",
                 "dkundel.vscode-new-file",
-                "eamodio.gitlens",
                 "editorconfig.editorconfig",
                 "formulahendry.code-runner",
                 "gruntfuggly.todo-tree",
@@ -59,12 +60,22 @@
                 "editor.dragAndDrop": true,
                 "editor.formatOnSave": true,
                 "editor.insertSpaces": true,
-                "editor.rulers": [80, 120],
+                "editor.rulers": [
+                    80,
+                    120
+                ],
                 "editor.snippetSuggestions": "top",
                 "editor.tabSize": 4,
                 "editor.wordWrap": "off",
                 "eslint.alwaysShowStatus": true,
-                "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "html"],
+                "eslint.validate": [
+                    "javascript",
+                    "javascriptreact",
+                    "typescript",
+                    "typescriptreact",
+                    "vue",
+                    "html"
+                ],
                 "explorer.compactFolders": false,
                 "extensions.autoUpdate": false,
                 "liveServer.settings": {
@@ -78,7 +89,9 @@
                 "terminal.integrated.profiles.linux": {
                     "bash": {
                         "path": "/bin/bash",
-                        "args": ["-i"],
+                        "args": [
+                            "-i"
+                        ],
                         "icon": "terminal-bash"
                     }
                 },
@@ -122,9 +135,18 @@
                     "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
                 },
                 "alignment.surroundSpace": {
-                    "colon": [1, 1],
-                    "assignment": [1, 1],
-                    "arrow": [1, 1],
+                    "colon": [
+                        1,
+                        1
+                    ],
+                    "assignment": [
+                        1,
+                        1
+                    ],
+                    "arrow": [
+                        1,
+                        1
+                    ],
                     "comment": 2
                 },
                 "prettier.useEditorConfig": true,
@@ -141,7 +163,12 @@
         }
     },
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
-    "forwardPorts": [3000, 8080, 9003, 9229],
+    "forwardPorts": [
+        3000,
+        8080,
+        9003,
+        9229
+    ],
     // Mount ssh directory inside container for use with git. Mount node_modules from an internal volume.
     "mounts": [
         "source=${localEnv:HOME}/.ssh,target=/home/app/.ssh,type=bind,consistency=cached"

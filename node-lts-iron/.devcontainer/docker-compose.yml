@@ -19,10 +19,6 @@ services:
       context: .
       dockerfile: "Dockerfile"
       target: "dev-builder"
-    environment:
-        AZ_OVERRIDE_MANAGED_IDENTITY: 1
-        XDEBUG_MODE: debug
-        XDEBUG_CONFIG: client_host=app.local client_port=9003
     networks:
       app_net:
         ipv4_address: "172.16.222.10"

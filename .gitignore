@@ -1,3 +1,11 @@
-.env
-.env.local
+# ide support (in general)
+.env*
+!.env.sample
+!.envrc
+/.idea/
+/.vscode/*
+!/.vscode/*.sample.json
+!/.vscode/*.sample
 
+# miscellaneous
+.DS_Store
