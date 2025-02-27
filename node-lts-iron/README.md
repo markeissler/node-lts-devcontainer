@@ -82,7 +82,7 @@ inside the container.
 #### Initial configuration
 
 - Copy this project into your working directory.
-- Copy `./.devcontainer/.env.sample` to `./.devcontainer.env` and edit to suit.
+- Copy `./.devcontainer/.env.sample` to `./.devcontainer/.env` and edit to suit.
 - Optional: Edit `./.devcontainer/.docker-compose.yml` to enable databases by setting `scale: 1`.
 
 #### Open the project in VSCode
@@ -118,6 +118,27 @@ environment configuration files.
 
 ```bash
 prompt> cat .devcontainer/common/.gitignore.tpl >> .gitignore
+```
+
+Next, you will need to update the `eslint.config.js` file to update global variables to include both browser globals and
+Node.js globals -- otherwise, you will experience eslint warnings for variables that are provided by Node.js.
+
+```bash
+prompt> cp .devcontainer/common/vite-eslint.config.js eslint.config.js
+```
+
+Finally, you will want to update the `vite.config.js` file to respect settings as defined in the host environment:
+
+| Variable | Default |
+| -------- | ------- |
+| VITE_API_URL | http://localhost:3000 |
+| VITE_PORT | 3000 |
+
+The above settings can be injected into the environment using a `.env` file or in the encapsulating environment (i.e.
+set from a docker compose file or some other mechanism).
+
+```bash
+prompt> cp .devcontainer/common/vite-config.js >> vite-config.js
 ```
 
 ### VSCode extensions
