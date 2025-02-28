@@ -177,6 +177,7 @@ __rvest.vs-code-prettier-eslint__
 prompt> npm install \
     prettier@^3.1.0 \
     eslint@^8.52.0 \
+    eslint-plugin-react@^7.37.4 \
     prettier-eslint@^16.1.2 \
     @typescript-eslint/parser@^5.0.1 \
     typescript@^4.4.4
