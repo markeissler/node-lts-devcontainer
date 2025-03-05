@@ -19,6 +19,7 @@
                 "gruntfuggly.todo-tree",
                 "mads-hartmann.bash-ide-vscode",
                 "ms-vscode.js-debug",
+                "pucelle.vscode-css-navigation",
                 // js-debug-companion is for the local VSCode only and will throw an error on the server!
                 // "ms-vscode.js-debug-companion",
                 "rangav.vscode-thunder-client",
