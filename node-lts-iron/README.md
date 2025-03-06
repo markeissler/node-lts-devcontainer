@@ -110,7 +110,7 @@ Once vite completes, your project will have been populated with a scaffold. You 
 dependencies:
 
 ```bash
-prompt> npm install
+prompt> yarn
 ```
 
 Next, you will need to update the `.gitignore` file as vite will have overwritten the original which is setup to ignore
@@ -174,13 +174,19 @@ do require additional installations:
 __rvest.vs-code-prettier-eslint__
 
 ```bash
-prompt> npm install \
+prompt> yarn add --dev \
     prettier@^3.1.0 \
     eslint@^8.52.0 \
     eslint-plugin-react@^7.37.4 \
     prettier-eslint@^16.1.2 \
     @typescript-eslint/parser@^5.0.1 \
     typescript@^4.4.4
+```
+
+For typescript projects you may also need to install:
+
+```bash
+prompt> yarn add --dev @types/node
 ```
 
 ---
