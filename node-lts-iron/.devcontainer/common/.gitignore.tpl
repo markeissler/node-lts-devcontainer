@@ -6,7 +6,7 @@ dist/
 .env*
 !.env.sample
 !.envrc
-!/.devcontainer/**/.tpl
+!/.devcontainer/**/*.tpl
 /.idea/
 /.vscode/*
 !/.vscode/*.sample.json
