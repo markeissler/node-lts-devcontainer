@@ -1,4 +1,5 @@
-import { defineConfig, loadEnv, UserConfig } from 'vite';
+import { defineConfig, loadEnv, type UserConfig } from 'vite';
+
 import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }): UserConfig => {
