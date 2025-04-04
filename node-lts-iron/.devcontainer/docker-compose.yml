@@ -50,6 +50,24 @@ services:
       - "persist-mariadb:/var/lib/mysql"
     scale: 0
 
+  mongodb:
+    image: mongo:8.0.6-noble
+    container_name: ${COMPOSE_PROJECT_NAME:-app}-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: app_mongo_user
+      MONGO_INITDB_ROOT_PASSWORD: app_mongo_pass
+    networks:
+      app_net:
+        ipv4_address: "172.16.229.12"
+        ipv6_address: "fd34:e78d:7bcb:47e8::12"
+        aliases:
+          - mongo.local
+    ports:
+      - "27017:27017"
+    volumes:
+      - "persist-mongo:/data"
+    scale: 0
+
   postgres:
     image: markeissler/postgres11-ssl:latest
     container_name: ${COMPOSE_PROJECT_NAME:-app}-postgres
@@ -100,6 +118,8 @@ networks:
 volumes:
   persist-mariadb:
     name: "${COMPOSE_PROJECT_NAME:-app}-devcontainer-persist-mysql"
+  persist-mongo:
+    name: "${COMPOSE_PROJECT_NAME:-app}-devcontainer-persist-mongo"
   persist-postgres:
     name: "${COMPOSE_PROJECT_NAME:-app}-devcontainer-persist-postgres"
   persist-redis:

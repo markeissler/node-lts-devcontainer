@@ -85,7 +85,7 @@ RUN set -x && \
     else \
         echo "Invalid BUILD_ARCH specified: ${BUILD_ARCH}. Exiting build." && exit 1; \
     fi \
-    && curl -sSL "https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key" | apt-key add - \
+    && curl -fsSL "https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key" | apt-key add - \
     && echo "deb [arch=${NODE_ARCH}] https://deb.nodesource.com/${NODE_REL} nodistro main" > "/etc/apt/sources.list.d/nodesource.list" \
     && apt-get update --quiet \
     && apt-get install --quiet --yes --no-install-recommends \
@@ -94,7 +94,7 @@ RUN set -x && \
 
 # Install yarn.
 RUN set -x \
-    && curl -sSL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+    && curl -fsSL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" > "/etc/apt/sources.list.d/yarn.list" \
     && apt-get update --quiet \
     && apt-get install --quiet --yes --no-install-recommends \
@@ -152,6 +152,16 @@ RUN set -x \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install --quiet --yes --no-install-recommends \
         mariadb-client \
+    && apt-get clean
+
+# Install mondodb client (mongosh).
+# NOTE: Keys updated to address `apt-key` deprecation.
+RUN set -x \
+    && curl -fsSL "https://www.mongodb.org/static/pgp/server-8.0.asc" | gpg --dearmor -o "/usr/share/keyrings/mongodb-server-8.0.gpg" \
+    && echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] http://repo.mongodb.org/apt/debian bookworm/mongodb-org/8.0 main" > "/etc/apt/sources.list.d/mongodb-org-8.0.list" \
+    && apt-get update -qq \
+    && apt-get install -qq --yes --no-install-recommends \
+        mongodb-mongosh \
     && apt-get clean
 
 # Install postgresql-client.
