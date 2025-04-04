@@ -15,10 +15,16 @@
 
 # Configure runtime debug configuration. This value should almost always be set
 # to `false` for `production` environments.
-[[ "${REACT_APP_DEBUG:-}" ]] && export REACT_APP_DEBUG="${REACT_APP_DEBUG}"
+[[ "${VITE_APP_DEBUG:-}" ]] && export VITE_APP_DEBUG="${VITE_APP_DEBUG}"
 
-# Configure runtime environment (staging, prod).
-[[ "${REACT_APP_ENV:-}" ]] && export REACT_APP_ENV="${REACT_APP_ENV}"
+# Configure runtime environment (development, production, staging).
+[[ "${VITE_APP_ENV:-}" ]] && export VITE_APP_ENV="${VITE_APP_ENV}"
 
 # Configure app name.
-[[ "${REACT_APP_NAME:-}" ]] && export REACT_APP_NAME="${REACT_APP_NAME}"
+[[ "${VITE_APP_NAME:-}" ]] && export VITE_APP_NAME="${VITE_APP_NAME}"
+
+# URL of the backend API.
+[[ "${VITE_API_URL:-}" ]] && export VITE_API_URL="${VITE_API_URL}"
+
+# PORT on which this React App listens.
+[[ "${VITE_PORT:-}" ]] && export VITE_PORT="${VITE_PORT}"
