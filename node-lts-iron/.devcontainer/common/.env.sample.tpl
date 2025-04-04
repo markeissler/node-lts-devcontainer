@@ -20,13 +20,19 @@
 
 # Configure runtime debug configuration. This value should almost always be set
 # to `false` for `production` environments.
-REACT_APP_DEBUG="true"
+VITE_APP_DEBUG="true"
 
 # Configure runtime environment (development, production, staging).
-REACT_APP_ENV="development"
+VITE_APP_ENV="development"
 
 # Configure app name.
-REACT_APP_NAME="my-app"
+VITE_APP_NAME="my-app"
+
+# URL of the backend API.
+#VITE_API_URL="http://localhost:3000"
+
+# PORT on which this React App listens.
+#VITE_PORT=3000
 
 ##
 ## OPTIONAL settings follow
