@@ -31,22 +31,24 @@
                 "aaron-bond.better-comments",
                 "dsznajder.es7-react-js-snippets",
                 "stackbreak.comment-divider",
-                "streetsidesoftware.code-spell-checker"
+                "streetsidesoftware.code-spell-checker",
+                // Vite support.
+                "vitest.explorer"
             ],
             // Set *default* container specific settings.json values on container create.
             "settings": {
-                "search.exclude": {
-                    "**/node_modules": false,
-                    "/node_modules": true
-                },
                 "files.associations": {
                     ".envrc": "shellscript",
                     "Dockerfile.*": "dockerfile",
                     "*.yml.tpl": "yaml"
                 },
                 "files.watcherExclude": {
-                    "**/node_modules/**": false,
-                    "/node_modules/**": true
+                    "**/node_modules/**": true,
+                    "**/dist/**": true
+                },
+                "search.exclude": {
+                    "**/node_modules": true,
+                    "**/dist": true
                 },
                 // @FIXME: Disable debugger autoAttach and usePreviewfor now.
                 // see: https://github.com/microsoft/vscode/issues/102249
@@ -172,7 +174,8 @@
     ],
     // Mount ssh directory inside container for use with git. Mount node_modules from an internal volume.
     "mounts": [
-        "source=${localEnv:HOME}/.ssh,target=/home/app/.ssh,type=bind,consistency=cached"
+        "source=${localEnv:HOME}/.ssh,target=/home/app/.ssh,type=bind,consistency=cached",
+        "source=${localWorkspaceFolder},target=/home/app/source,type=bind,consistency=cached"
     ],
     // Use 'postCreateCommand' to run commands after the container is created.
     // "postCreateCommand": "yarn install",
