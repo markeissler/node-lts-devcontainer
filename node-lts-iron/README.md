@@ -178,14 +178,13 @@ prompt> yarn add --dev \
     prettier@^3.1.0 \
     eslint@^8.52.0 \
     eslint-plugin-react@^7.37.4 \
-    prettier-eslint@^16.1.2 \
-    @typescript-eslint/parser@^5.0.1
+    prettier-eslint@^16.1.2
 ```
 
-For typescript projects you may also need to install:
+For typescript projects add:
 
 ```bash
-prompt> yarn add --dev @types/node
+prompt> yarn add --dev @types/node @typescript-eslint/parser@^5.0.1
 ```
 
 To support automatic import sorting, you need to install the following plugins:
@@ -194,8 +193,14 @@ To support automatic import sorting, you need to install the following plugins:
 prompt> yarn add --dev \
     eslint-plugin-import@^2.31.0 \
     eslint-import-resolver-alias@^1.1.2 \
-    eslint-import-resolver-typescript@^3.8.7 \
     eslint-plugin-simple-import-sort@^12.1.1
+```
+
+For typescript projects add:
+
+```bash
+prompt> yarn add --dev \
+    eslint-import-resolver-typescript@^3.8.7
 ```
 
 And then also be sure to use the `vite-eslint.config.js.ts.sorting.tpl` temnplate file for the `eslint.config.js` file
