@@ -3,33 +3,28 @@
 // This configuration supports JavaScript React projects with auto-sorting of
 //  imports and React best practices.
 
-import js from '@eslint/js';
-import globals from 'globals';
+import importPlugin from 'eslint-plugin-import';
+import importConfig from 'eslint-plugin-import/config/flat/react.js';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
-import importPlugin from 'eslint-plugin-import';
-import importConfig from 'eslint-plugin-import/config/flat/react.js';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import globals from 'globals';
+
+import js from '@eslint/js';
 
 export default [
-  {
-    ignores: ['dist'],
-  },
+  { ignores: ["dist"] },
+  js.configs.recommended,
+  importConfig,
+  // react.configs.recommended,
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2020,
-      sourceType: 'module',
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
+      globals: { ...globals.browser, ...globals.node },
     },
     settings: {
-      react: {
-        version: 'detect',
-      },
       'import/resolver': {
         alias: {
           map: [
@@ -37,20 +32,21 @@ export default [
           ],
           extensions: ['.js', '.jsx', '.svg', '.png', '.jpg'],
         },
+        node: {
+          extensions: ['.js', '.jsx'],
+        },
+      },
+      react: {
+        version: 'detect',
       },
     },
     plugins: {
-      react,
+      react: react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       import: importPlugin,
       'simple-import-sort': simpleImportSort,
     },
-    extends: [
-      js.configs.recommended,
-      importConfig,
-      react.configs.recommended,
-    ],
     rules: {
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': [
@@ -58,7 +54,7 @@ export default [
         { allowConstantExport: true },
       ],
 
-      // Resolve imports properly
+      // Resolve imports properly.
       'import/no-unresolved': 'error',
 
       // Auto-sort imports
@@ -66,18 +62,34 @@ export default [
         'error',
         {
           groups: [
-            ['^node:.*', '^fs', '^path', '^[a-z]'], // Node built-ins
-            ['^react', '^@react'], // React packages
-            ['^@?\\w'], // External packages
-            ['^@my_org/'], // Internal aliases
-            ['^\\.\\.?(?!/node_modules)'], // Parent imports
-            ['^\\./'], // Relative imports
-            ['^\\u0000'], // Side-effect imports
+            // 1️⃣ Built-in node modules
+            ['^node:.*', '^fs', '^path', '^[a-z]'],
+
+            // 2️⃣ React-related packages
+            ['^react', '^@react'],
+
+            // 3️⃣ External packages (everything else from node_modules)
+            ['^@?\\w'],
+
+            // 4️⃣ Internal imports (aliases like @my_org/**)
+            ['^@my_org/'],
+
+            // 5️⃣ Parent imports (`../`)
+            ['^\\.\\.?(?!/node_modules)'],
+
+            // 6️⃣ Relative imports (`./`)
+            ['^\\./'],
+
+            // 7️⃣ Side-effect imports (e.g., `import "./styles.css";`)
+            ['^\\u0000'],
           ],
         },
       ],
+
       'simple-import-sort/exports': 'error',
-      'import/order': 'off', // Disabled in favor of simple-import-sort
+
+      // Optional: Disable `import/order` since `simple-import-sort` replaces it.
+      'import/order': 'off',
     },
   },
 ];

@@ -184,27 +184,48 @@ prompt> yarn add --dev \
 For typescript projects add:
 
 ```bash
-prompt> yarn add --dev @types/node @typescript-eslint/parser@^5.0.1
+prompt> yarn add --dev \
+    @types/node \
+    @typescript-eslint/parser@^5.0.1
 ```
 
-To support automatic import sorting, you need to install the following plugins:
+#### Import resolution
+
+For javascript add:
 
 ```bash
 prompt> yarn add --dev \
     eslint-plugin-import@^2.31.0 \
     eslint-import-resolver-alias@^1.1.2 \
-    eslint-plugin-simple-import-sort@^12.1.1
+    eslint-import-resolver-node@^0.3.9
 ```
 
-For typescript projects add:
+For typescript add:
 
 ```bash
 prompt> yarn add --dev \
+    eslint-plugin-import@^2.31.0 \
+    eslint-import-resolver-alias@^1.1.2 \
     eslint-import-resolver-typescript@^3.8.7
 ```
 
-And then also be sure to use the `vite-eslint.config.js.ts.sorting.tpl` temnplate file for the `eslint.config.js` file
-contents.
+#### Import sorting
+
+To support automatic import sorting, you need to install an additional plugins:
+
+```bash
+prompt> yarn add --dev \
+    eslint-plugin-simple-import-sort@^12.1.1
+```
+
+And then also be sure to use the correct `vite-eslint.config.js` file:
+
+- `vite-eslint.config.js` (for javascript without import sorting)
+- `vite-eslint.config.ts` (for typescript without import sorting)
+- `vite-eslint.config.js.sorting.tpl` (for javascript with import sorting)
+- `vite-eslint.config.js.ts.sorting.tpl` (for typescript with import sorting)
+
+Just copy one of the above files to overwrite the existing `eslint.config.js`.
 
 ---
 moe@markeissler.org
