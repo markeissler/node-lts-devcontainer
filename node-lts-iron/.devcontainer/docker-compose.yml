@@ -21,8 +21,8 @@ services:
       target: "dev-builder"
     networks:
       app_net:
-        ipv4_address: "172.16.222.10"
-        ipv6_address: "fd90:5b8f:a0aa:d9eb::10"
+        ipv4_address: "172.16.229.10"
+        ipv6_address: "fd34:e78d:7bcb:47e8::10"
         aliases:
           - app.local
     volumes:
@@ -50,6 +50,14 @@ services:
       - "persist-mariadb:/var/lib/mysql"
     scale: 0
 
+  # NOTE:
+  #   prompt> mongosh "mongodb://app_mongo_user:app_mongo_pass@mongo.local/admin"
+  #   admin> use ch2
+  #   switched to db ch2
+  # - or -
+  #   prompt> mongosh "mongodb://app_mongo_user:app_mongo_pass@mongo.local/ch2?authSource=admin"
+  #   ch2>
+  #
   mongodb:
     image: mongo:8.0.6-noble
     container_name: ${COMPOSE_PROJECT_NAME:-app}-mongo
@@ -110,10 +118,8 @@ networks:
     ipam:
       driver: default
       config:
-      -
-        subnet: "172.16.222.0/24"
-      -
-        subnet: "fd90:5b8f:a0aa:d9eb::/64"
+        - subnet: "172.16.229.0/24"
+        - subnet: "fd34:e78d:7bcb:47e8::/64"
 
 volumes:
   persist-mariadb:
